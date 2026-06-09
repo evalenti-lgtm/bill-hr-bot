@@ -13,7 +13,7 @@ const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 async function searchClickUp(query) {
   try {
     const response = await fetch(
-      `https://api.clickup.com/api/v2/folder/901510565970`,
+      `https://api.clickup.com/api/v3/workspaces/${process.env.CLICKUP_TEAM_ID}/docs/q91d7-3525/pages`,
       {
         headers: {
           Authorization: process.env.CLICKUP_API_KEY,
