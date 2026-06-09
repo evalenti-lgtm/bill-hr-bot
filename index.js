@@ -6,6 +6,7 @@ console.log("SLACK_APP_TOKEN exists:", !!process.env.SLACK_APP_TOKEN);
 console.log("SLACK_BOT_TOKEN exists:", !!process.env.SLACK_BOT_TOKEN);
 console.log("SLACK_SIGNING_SECRET exists:", !!process.env.SLACK_SIGNING_SECRET);
 console.log("ANTHROPIC_API_KEY exists:", !!process.env.ANTHROPIC_API_KEY);
+console.log("ALL ENV KEYS:", Object.keys(process.env).join(", "));
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
