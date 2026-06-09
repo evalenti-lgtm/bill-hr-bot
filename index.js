@@ -16,7 +16,7 @@ async function searchClickUp(query) {
       `https://api.clickup.com/api/v2/team/${process.env.CLICKUP_TEAM_ID}/doc`,
       {
         headers: {
-          Authorization: process.env.CLICKUP_API_KEY,
+          Authorization: `Bearer ${process.env.CLICKUP_API_KEY}`,
           "Content-Type": "application/json",
         },
       }
