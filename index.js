@@ -186,15 +186,12 @@ app.message(async ({ message, say }) => {
   try {
     const userId = message.user;
 
-    // Initialize history for this user if needed
     if (!conversations[userId]) {
       conversations[userId] = [];
     }
 
-    // Add user message to history
     conversations[userId].push({ role: "user", content: message.text });
 
-    // Keep only last 10 messages to avoid token limits
     if (conversations[userId].length > 10) {
       conversations[userId] = conversations[userId].slice(-10);
     }
@@ -208,7 +205,6 @@ app.message(async ({ message, say }) => {
 
     const reply = response.content[0].text;
 
-    // Add Bill's reply to history
     conversations[userId].push({ role: "assistant", content: reply });
 
     await say({ text: reply, thread_ts: message.ts });
@@ -216,6 +212,41 @@ app.message(async ({ message, say }) => {
     console.error(err);
     await say({ text: "Sorry, something went wrong!", thread_ts: message.ts });
   }
+});
+
+app.event("app_home_opened", async ({ event, client }) => {
+  await client.views.publish({
+    user_id: event.user,
+    view: {
+      type: "home",
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: "*👋 Hi, I'm Bill — your HR Assistant!*"
+          }
+        },
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: "I'm here to help you find answers to HR and company policy questions — from working hours and vacation to travel expenses and benefits.\n\n*Just send me a message and I'll do my best to help!* 😊"
+          }
+        },
+        {
+          type: "divider"
+        },
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: "⚠️ *Please note:* I can make mistakes! For anything important or sensitive, always double-check with the HR team:\n• Marilena: mp@impossiblecloud.com\n• Henning: hrenken@impossiblecloud.com"
+          }
+        }
+      ]
+    }
+  });
 });
 
 (async () => {
