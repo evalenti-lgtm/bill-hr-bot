@@ -167,16 +167,40 @@ If you cannot answer reliably:
 - Direct them to Marilena (mp@impossiblecloud.com) or Henning (hrenken@impossiblecloud.com)
 `;
 
+// Store conversation history per user (in memory)
+const conversations = {};
+
 app.message(async ({ message, say }) => {
   if (message.subtype) return;
   try {
+    const userId = message.user;
+
+    // Initialize history for this user if needed
+    if (!conversations[userId]) {
+      conversations[userId] = [];
+    }
+
+    // Add user message to history
+    conversations[userId].push({ role: "user", content: message.text });
+
+    // Keep only last 10 messages to avoid token limits
+    if (conversations[userId].length > 10) {
+      conversations[userId] = conversations[userId].slice(-10);
+    }
+
     const response = await anthropic.messages.create({
       model: "claude-sonnet-4-20250514",
       max_tokens: 1000,
       system: BILL_SYSTEM_PROMPT,
-      messages: [{ role: "user", content: message.text }],
+      messages: conversations[userId],
     });
-    await say({ text: response.content[0].text, thread_ts: message.ts });
+
+    const reply = response.content[0].text;
+
+    // Add Bill's reply to history
+    conversations[userId].push({ role: "assistant", content: reply });
+
+    await say({ text: reply, thread_ts: message.ts });
   } catch (err) {
     console.error(err);
     await say({ text: "Sorry, something went wrong!", thread_ts: message.ts });
