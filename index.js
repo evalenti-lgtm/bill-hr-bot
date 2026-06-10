@@ -168,7 +168,7 @@ If you cannot answer reliably:
 - Direct them to Marilena (mp@impossiblecloud.com) or Henning (hrenken@impossiblecloud.com)
 
 For questions about who owns a specific tool or system:
-- Say: "You can find the full list of approved tools and their owners here 👉 https://impossiblecloud.slack.com/archives/C0736SY9FM4"
+- Say: "You can find the full list of approved tools and their owners here 👉 https://impossiblecloud.slack.com/docs/T02UAP7091C/F09JFL6EHJR"
 
 For questions about access to a tool (e.g. "how do I get access to X", "I can't log into X"):
 - Say: "For access requests, please post in 👉 #helpdesk_internal — the right person will pick it up there!"
